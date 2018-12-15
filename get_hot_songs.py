@@ -13,20 +13,6 @@ from bs4 import BeautifulSoup
 import time
 import csv
 
-
-def get_html_src(url):
-    # 可以任意选择浏览器,前提是要配置好相关环境,更多请参考selenium官方文档
-    driver = webdriver.Chrome()
-    driver.get(url)
-    # 切换成frame
-    driver.switch_to_frame("g_iframe")
-    # 休眠3秒,等待加载完成!
-    time.sleep(3)
-    page_src = driver.page_source
-    driver.close()
-    return page_src
-
-
 def parse_html_page(html):
     # 使用双引号会出现 Unresolve reference
     # pattern = '<span class="txt"><a href="/song?id=(\d*)"><b title="(.*?)">'
@@ -56,7 +42,7 @@ def write_to_csv(items, artist_name):
 # 获取歌手id和歌手姓名
 def read_csv():
 
-    with open("music163_artists.csv", "r", encoding="utf-8") as csvfile:
+    with open("files/music163_artists.csv", "r", encoding="utf-8") as csvfile:
 
         reader = csv.reader(csvfile)
         for row in reader:
@@ -69,16 +55,27 @@ def read_csv():
 
 
 def main():
-    for readcsv in read_csv():
-        artist_id, artist_name = readcsv
-        url = "https://music.163.com/#/artist?id=" + str(artist_id)
-        print("正在获取{}的热门歌曲...".format(artist_name))
-        html = get_html_src(url)
-        items = parse_html_page(html)
-        print("{}的热门歌曲获取完成!".format(artist_name))
-        print("开始将{}的热门歌曲写入文件".format(artist_name))
-        write_to_csv(items, artist_name)
-        print("{}的热门歌曲写入到本地成功!".format(artist_name))
+    try:
+        driver = webdriver.Chrome()
+        driver.implicitly_wait(3)
+        for readcsv in read_csv():
+            artist_id, artist_name = readcsv
+            url = "https://music.163.com/#/artist?id=" + str(artist_id)
+            print("正在获取{}的热门歌曲...".format(artist_name))
+            driver.get(url)
+            # 切换成frame
+            driver.switch_to_frame("g_iframe")
+        
+            html = driver.page_source
+            items = parse_html_page(html)
+            print("{}的热门歌曲获取完成!".format(artist_name))
+            print("开始将{}的热门歌曲写入文件".format(artist_name))
+            write_to_csv(items, artist_name)
+            print("{}的热门歌曲写入到本地成功!".format(artist_name))
+    finally:
+        driver.quit()
+
+        
 
 
 if __name__ == "__main__":
