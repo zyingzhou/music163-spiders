@@ -35,7 +35,7 @@ def get_artists(url):
 
 ls1 = [1001, 1002, 1003, 2001, 2002, 2003, 6001, 6002, 6003, 7001, 7002, 7003, 4001, 4002, 4003]    # id的值
 ls2 = [-1, 0, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]    # initial的值
-csvfile = open('/home/zhiying/文档/music_163_artists(1).csv', 'a')    # 文件存储的位置
+csvfile = open('/home/zhiying/文档/music_163_artists(1).csv', 'a', encoding='utf-8')    # 文件存储的位置
 writer = csv.writer(csvfile)
 writer.writerow(('artist_id', 'artist_name'))
 for i in ls1:
