@@ -32,7 +32,7 @@ html = get_html_src(url)
 # 将获得的歌手的热门歌曲id和名字写入csv文件
 def write_to_csv(items, artist_name):
 
-    with open("music163_songs.csv", "a") as csvfile:
+    with open("music163_songs.csv", "a", encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["歌手名字", artist_name])
 
