@@ -8,7 +8,9 @@
 
 
 ## 二,[通过歌手id号爬取全部歌手的每一首热门歌曲的id号](https://github.com/zyingzhou/wangyiyun_music/blob/master/get_hot_songs.py "通过歌手id号爬取全部歌手的每一首热门歌曲的id号")
-> 爬取思路同上,这里就不在赘述! 
+> 一种方法爬取思路同上。另一种方法是直接爬取嵌在iframe里面的子页面(控制面板--Sources--contentFrame--域名文件夹下可找到)。 
+> [爬取子frame](get_songs.py "获取爬取子Frame代码") 
+> 
 >
 
 
