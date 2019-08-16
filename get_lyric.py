@@ -88,7 +88,9 @@ def main():
     params, encSecKey = get_params(songid)
     data = {'params': params, 'encSecKey': encSecKey}
     url = 'https://music.163.com/weapi/song/lyric?csrf_token='
-    r = requests.post(url, data=data)
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+'Chrome/66.0.3359.181 Safari/537.36'}
+    r = requests.post(url, headers=headers, data=data)
     # 状态码
     print(r.status_code)
     print(r.json())
